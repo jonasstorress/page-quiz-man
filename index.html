@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/vite.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Meta Pixel Code -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js"
+      );
+
+      fbq("init", "1154005323057366");
+      fbq("track", "PageView");
+    </script>
+
+    <!-- End Meta Pixel Code -->
+
+    <title>quiz-man</title>
+    <style>
+      html {
+        overflow-y: scroll !important;
+      }
+      #main,
+      #root {
+        width: 100%;
+        min-height: 100dvh;
+      }
+      #main::-webkit-scrollbar-track {
+        background-color: #121212;
+      }
+      #main::-webkit-scrollbar {
+        width: 0px;
+        background: #424242;
+      }
+      #main::-webkit-scrollbar-thumb {
+        background: #424242;
+      }
+    </style>
+  </head>
+  <body class="background-custom-process" id="main">
+    <div id="root"></div>
+    <script type="module" src="/src/index.jsx"></script>
+  </body>
+</html>

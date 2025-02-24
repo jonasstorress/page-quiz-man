@@ -1,0 +1,60 @@
+.background-custom-lines {
+  width: 100%;
+  height: 100dvh;
+  background-color: #141218;
+}
+
+.line-custom-color {
+  background-color: #393939;
+  height: 3px;
+}
+
+.btn-custom-back {
+  background-color: #393939;
+  color: #ffffff;
+  padding: 5px;
+}
+
+.btn-custom-back:hover {
+  background-color: #393939;
+  color: #ffffff;
+  padding: 5px;
+}
+
+.grid-custom-center {
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+  align-items: stretch;
+}
+
+.background-custom-process {
+  width: 100%;
+  height: 100dvh;
+  background-color: #141218;
+}
+
+@media (min-width: 1366px) {
+  .background-custom-lines {
+    background-size: 84px 84px;
+  }
+  .grid-custom-center {
+    max-width: 430px;
+  }
+}
+
+@media (min-width: 768px) {
+  .background-custom-lines {
+    background-size: 79px 79px;
+  }
+}
+
+@media (max-width: 767px) {
+  .background-custom-lines {
+    background-size: 64px 64px;
+  }
+}
+
+.container {
+  max-width: 440px !important;
+}

@@ -1,0 +1,63 @@
+.card-custom-frase {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  padding: 32px 16px;
+  text-align: center;
+  border: 2px solid #393939;
+  background-image: radial-gradient(
+    rgba(255, 68, 0, 0.3) 0%,
+    rgba(255, 68, 0, 0) 80%
+  );
+}
+
+.card-custom-frase::before {
+  content: "“";
+  position: absolute;
+  top: 4px;
+  left: 10px;
+  font-size: 34px;
+  line-height: 48px;
+  color: #6a6a6a;
+}
+
+.card-custom-frase::after {
+  content: "”";
+  position: absolute;
+  top: 4px;
+  right: 10px;
+  font-size: 34px;
+  line-height: 48px;
+  color: #6a6a6a;
+}
+
+.btn-custom-med {
+  user-select: none;
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border: 2px solid #2a2a2a;
+  padding: 4xp 10px;
+  height: 56px;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.btn-custom-med:hover {
+  cursor: pointer;
+  background-color: #393939;
+  border: 2px solid #393939;
+}
+
+.btn-custom-med-active {
+  cursor: pointer;
+  background-color: #393939;
+  border: 2px solid #ff6025;
+}
+
+.btn-custom-med-active:hover {
+  cursor: pointer;
+  background-color: #393939 !important;
+  border: 2px solid #ff6025 !important;
+}

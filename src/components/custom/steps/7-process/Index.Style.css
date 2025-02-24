@@ -1,0 +1,34 @@
+.btn-custom-next {
+  border: 0px;
+  border-radius: 0px;
+  background-color: #ff4000;
+  color: #ffffff;
+  padding: 24px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.btn-custom-next:hover {
+  background-color: #ff6025;
+}
+.card-option-select {
+  padding: 12px;
+  margin: 0 0 16px;
+  color: #ffffff;
+  border: 2px solid #1e1e1e;
+  background-color: #1e1e1e;
+  border-radius: 0px;
+}
+.card-option-select:hover {
+  background-color: #2a2a2a;
+  border: 2px solid #2a2a2a;
+  cursor: pointer;
+}
+
+.icon-active {
+  color: #ff6025;
+}
+
+.card-actived {
+  border: 2px solid #ff6025 !important;
+}
