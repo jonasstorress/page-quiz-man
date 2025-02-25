@@ -97,6 +97,7 @@ const Result = ({lang}) => {
       clearInterval(progressInterval);
       clearInterval(fraseInterval);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
