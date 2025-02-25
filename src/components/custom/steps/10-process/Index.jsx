@@ -1,147 +1,133 @@
 import "./Index.Style.css";
-import {useState} from "react";
 import PropTypes from "prop-types";
-import {FaArrowRight} from "react-icons/fa6";
-import {IoMdCheckboxOutline} from "react-icons/io";
-import {IoMdClose} from "react-icons/io";
-import {MdOutlineCheckBoxOutlineBlank} from "react-icons/md";
-
-// IMG's
-import IMGten from "../../../../assets/images/steps/ten.png";
+import {useEffect, useState} from "react";
 import {Card} from "@/components/ui/card";
-import {Separator} from "@/components/ui/separator";
-import {Button} from "@/components/ui/button";
+import {IoRadioButtonOffSharp, IoRadioButtonOn} from "react-icons/io5";
+
+// Imagens
+import IMGSix1 from "../../../../assets/images/steps/four-1.svg";
+import IMGSix2 from "../../../../assets/images/steps/six-2.svg";
+import IMGSix3 from "../../../../assets/images/steps/three-4.svg";
+import IMGSix4 from "../../../../assets/images/steps/six-1.svg";
 
 const translations = {
   pt: {
-    title: "Você tem dificuldades com algum dos seguintes itens?",
-    subtitle:
-      "Ajustaremos o plano para proteger essas partes do corpo de mais danos",
-    button: "Entendi",
-    selections: [
-      "Articulações",
-      "Joelhos",
-      "Costas",
-      "Parte inferior das costas",
+    title:
+      "Você está preocupado que problemas sexuais estejam afetando seus relacionamentos?",
+    weight: [
+      "Sim, é uma grande preocupação",
+      "Sim, eu tenho em mente",
+      "Eu não tenho certeza",
+      "Não, de jeito nenhum",
     ],
-    orter: "Nenhuma das opções acima",
   },
   in: {
-    title: "Do you have difficulties with any of the following items?",
-    subtitle:
-      "We will adjust the plan to protect these parts of the body from further damage",
-    button: "Got it",
-    selections: ["Joints", "Knees", "Back", "Lower back"],
-    orter: "None of the above",
+    title:
+      "Are you worried that sexual problems are affecting your relationships?",
+    weight: [
+      "Yes, it's a major concern",
+      "Yes, it's on my mind",
+      "I'm not sure",
+      "No, not at all",
+    ],
   },
   es: {
-    title: "¿Tienes dificultades con alguno de los siguientes elementos?",
-    subtitle:
-      "Ajustaremos el plan para proteger estas partes del cuerpo de más daños",
-    button: "Entendido",
-    selections: [
-      "Articulaciones",
-      "Rodillas",
-      "Espalda",
-      "Parte baja de la espalda",
+    title:
+      "¿Te preocupa que los problemas sexuales estén afectando tus relaciones?",
+    weight: [
+      "Sí, es una gran preocupación",
+      "Sí, lo tengo en mente",
+      "No estoy seguro",
+      "No, para nada",
     ],
-    orter: "Ninguna de las opciones anteriores",
   },
   it: {
-    title: "Hai difficoltà con uno dei seguenti elementi?",
-    subtitle:
-      "Adatteremo il piano per proteggere queste parti del corpo da ulteriori danni",
-    button: "Ho capito",
-    selections: [
-      "Articolazioni",
-      "Ginocchia",
-      "Schiena",
-      "Parte bassa della schiena",
+    title:
+      "Sei preoccupato che i problemi sessuali stiano influenzando le tue relazioni?",
+    weight: [
+      "Sì, è una grande preoccupazione",
+      "Sì, ci penso",
+      "Non sono sicuro",
+      "No, per niente",
     ],
-    orter: "Nessuna delle opzioni precedenti",
+  },
+  fn: {
+    title:
+      "Êtes-vous inquiet que des problèmes sexuels affectent vos relations?",
+    weight: [
+      "Oui, c'est une préoccupation majeure",
+      "Oui, j'y pense",
+      "Je ne suis pas sûr",
+      "Non, pas du tout",
+    ],
   },
 };
+const images = [IMGSix1, IMGSix2, IMGSix3, IMGSix4];
 
-export default function StepTen({language, AlterProcess}) {
+export default function StepFour({language, AlterProcess}) {
   const lang = translations[language] ? language : "pt";
-  const {title, subtitle, selections, button, orter} = translations[lang];
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [selectedAlter, setSelectedAlter] = useState(false);
+  const {title, weight} = translations[lang];
+
+  const ChangeProcess = () => {
+    AlterProcess("step-twelve");
+  };
+
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const handleSelect = (index) => {
-    if (selectedAlter) {
-      setSelectedAlter(false);
+    setSelectedOption(index);
+  };
+
+  // useEffect para chamar ChangeProcess 1 segundo após a seleção de um item
+  useEffect(() => {
+    if (selectedOption !== null) {
+      const timer = setTimeout(() => {
+        ChangeProcess();
+      }, 1000); // 1000 milissegundos = 1 segundo
+
+      // Limpa o timer se o componente for desmontado ou se selectedOption mudar antes do tempo
+      return () => clearTimeout(timer);
     }
-
-    setSelectedItems((prev) =>
-      prev.includes(index)
-        ? prev.filter((item) => item !== index)
-        : [...prev, index]
-    );
-  };
-
-  const handleAlterSelect = () => {
-    setSelectedItems([]);
-    setSelectedAlter(true);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedOption]); // Executa sempre que selectedOption mudar
 
   return (
-    <div className="grid-custom-step px-4 md:px-0 relative">
-      <div className="flex flex-col justify-center items-center pt-8 w-full">
-        <span className="text-white text-center md:text-start lg:text-3xl font-bold pb-4 w-full">
+    <div className="grid-custom-step px-4 md:px-0">
+      <div className="flex flex-col justify-center items-center pt-4 w-full">
+        <span
+          className="text-center step-title-three font-bold pb-4 w-full"
+          style={{color: "#ffffffe0", fontSize: "22px"}}
+        >
           {title}
         </span>
-        <p className="text-white text-lg pb-6">{subtitle}</p>
       </div>
-      <div className="flex flex-col w-full gap-2 relative">
-        <div className="w-full flex flex-col relative">
-          {selections.map((text, index) => (
-            <Card
-              key={index}
-              className={`w-[70%] card-option-select flex items-center text-lg font-bold cursor-pointer z-20 
-                        ${
-                          selectedItems.includes(index) ? " card-actived " : ""
-                        }`}
-              onClick={() => handleSelect(index)}
-            >
-              {selectedItems.includes(index) ? (
-                <IoMdCheckboxOutline className="w-6 h-6 custom-icon-on mr-2" />
-              ) : (
-                <MdOutlineCheckBoxOutlineBlank className="w-6 h-6 custom-icon-off mr-2" />
-              )}
-              {text}
-            </Card>
-          ))}
-          <Separator className="mb-6 mt-2 line-color-custom w-[70%]" />
+      <div className="flex flex-col w-full">
+        {weight.map((text, index) => (
           <Card
-            className={`w-[70%] card-option-select flex items-center text-lg font-bold cursor-pointer z-20 ${
-              selectedAlter ? " card-actived " : ""
+            key={index}
+            className={`w-full card-option-select flex justify-between items-center text-lg font-bold cursor-pointer z-20 ${
+              selectedOption === index ? " card-actived " : ""
             }`}
-            onClick={handleAlterSelect}
+            onClick={() => handleSelect(index)}
           >
-            <IoMdClose className="w-6 h-6 custom-icon-on mr-2" />
+            <div className="flex items-center py-1 ml-2">
+              <img alt="..." src={images[index]} className="w-8 h-8" />
+              <p className="ml-4 font-light text-base">{text}</p>
+            </div>
 
-            {orter}
+            {selectedOption === index ? (
+              <IoRadioButtonOn className="mr-2 text-2xl icon-active" />
+            ) : (
+              <IoRadioButtonOffSharp className="mr-2 text-2xl" />
+            )}
           </Card>
-          <div className="absolute inset-0 flex items-center justify-end ">
-            <img alt="..." src={IMGten} className="w-32" />
-          </div>
-        </div>
-        <div className="flex items-end justify-end pt-4 pb-12">
-          <Button
-            className="btn-custom-next flex justify-between items-center w-full lg:w-[40%] xl:w-[36%]"
-            onClick={() => AlterProcess("step-eleven")}
-            disabled={selectedItems.length === 0 && !selectedAlter}
-          >
-            {button} <FaArrowRight />
-          </Button>
-        </div>
+        ))}
       </div>
     </div>
   );
 }
 
-StepTen.propTypes = {
-  language: PropTypes.oneOf(["in", "pt", "es", "it"]),
+StepFour.propTypes = {
+  language: PropTypes.oneOf(["in", "pt", "es", "it", "fn"]),
   AlterProcess: PropTypes.func,
 };

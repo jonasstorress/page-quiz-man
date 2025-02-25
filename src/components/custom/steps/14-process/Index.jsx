@@ -1,105 +1,121 @@
 import "./Index.Style.css";
-import {useState} from "react";
 import PropTypes from "prop-types";
-import {FaArrowRight} from "react-icons/fa6";
-import {IoRadioButtonOffSharp, IoRadioButtonOn} from "react-icons/io5";
-
+import {useEffect, useState} from "react";
 import {Card} from "@/components/ui/card";
-import {Button} from "@/components/ui/button";
+import {IoRadioButtonOffSharp, IoRadioButtonOn} from "react-icons/io5";
 
 const translations = {
   pt: {
-    title: "Quanto tempo você quer que seus treinos durem?",
-    button: "Continuar",
-    option: [
-      "10-15 minutos ⏳",
-      "20-30 minutos ⏰",
-      "30-40 minutos 🕐",
-      "Deixe a gente decidir",
+    title:
+      "Você já tentou alguma solução rápida para melhorar sua vida íntima?",
+    weight: [
+      "Sim, eu os uso regularmente.",
+      "Sim, eu os experimentei ocasionalmente.",
+      "Não, eu não tomo nenhuma",
+      "Prefiro não responder",
     ],
   },
   in: {
-    title: "How long do you want your workouts to last?",
-    button: "Continue",
-    option: [
-      "10-15 minutes ⏳",
-      "20-30 minutes ⏰",
-      "30-40 minutes 🕐",
-      "Let us decide",
+    title: "Have you tried any quick fixes to improve your intimate life?",
+    weight: [
+      "Yes, I use them regularly.",
+      "Yes, I've tried them occasionally.",
+      "No, I don't take any.",
+      "Prefer not to answer",
     ],
   },
   es: {
-    title: "¿Cuánto tiempo quieres que duren tus entrenamientos?",
-    button: "Continuar",
-    option: [
-      "10-15 minutos ⏳",
-      "20-30 minutos ⏰",
-      "30-40 minutos 🕐",
-      "Déjanos decidir",
+    title: "¿Has probado alguna solución rápida para mejorar tu vida íntima?",
+    weight: [
+      "Sí, los uso regularmente.",
+      "Sí, los he probado ocasionalmente.",
+      "No, no tomo ninguna.",
+      "Prefiero no responder",
     ],
   },
   it: {
-    title: "Quanto tempo vuoi che durino i tuoi allenamenti?",
-    button: "Continua",
-    option: [
-      "10-15 minuti ⏳",
-      "20-30 minuti ⏰",
-      "30-40 minuti 🕐",
-      "Lascia decidere a noi",
+    title:
+      "Hai provato qualche soluzione rapida per migliorare la tua vita intima?",
+    weight: [
+      "Sì, li uso regolarmente.",
+      "Sì, li ho provati occasionalmente.",
+      "No, non ne prendo nessuna.",
+      "Preferisco non rispondere",
+    ],
+  },
+  fn: {
+    title:
+      "Avez-vous essayé des solutions rapides pour améliorer votre vie intime ?",
+    weight: [
+      "Oui, je les utilise régulièrement.",
+      "Oui, je les ai essayées occasionnellement.",
+      "Non, je n'en prends aucune.",
+      "Je préfère ne pas répondre",
     ],
   },
 };
 
 export default function StepFourteen({language, AlterProcess}) {
   const lang = translations[language] ? language : "pt";
-  const {title, option, button} = translations[lang];
+  const {title, weight} = translations[lang];
+
+  const ChangeProcess = () => {
+    AlterProcess("step-sixteen");
+  };
+
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleSelect = (index) => {
     setSelectedOption(index);
   };
 
+  // useEffect para chamar ChangeProcess 1 segundo após a seleção de um item
+  useEffect(() => {
+    if (selectedOption !== null) {
+      const timer = setTimeout(() => {
+        ChangeProcess();
+      }, 1000); // 1000 milissegundos = 1 segundo
+
+      // Limpa o timer se o componente for desmontado ou se selectedOption mudar antes do tempo
+      return () => clearTimeout(timer);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedOption]); // Executa sempre que selectedOption mudar
+
   return (
-    <div className="grid-custom-step px-4 md:px-0 relative">
-      <div className="flex flex-col justify-center items-center pt-8 w-full">
-        <span className="text-white text-center md:text-start lg:text-4xl font-bold pb-8 w-full">
+    <div className="grid-custom-step px-4 md:px-0">
+      <div className="flex flex-col justify-center items-center pt-4 w-full">
+        <span
+          className="text-center step-title-three font-bold pb-4 w-full"
+          style={{color: "#ffffffe0", fontSize: "22px"}}
+        >
           {title}
         </span>
       </div>
-      <div className="flex flex-col w-full gap-4 mb-4 relative">
-        <div className="w-full flex flex-col gap-2 relative">
-          {option.map((text, index) => (
-            <Card
-              key={index}
-              className={`w-full card-option-select flex items-center text-lg font-bold cursor-pointer z-20 ${
-                selectedOption === index ? " card-actived " : ""
-              }`}
-              onClick={() => handleSelect(index)}
-            >
-              {selectedOption === index ? (
-                <IoRadioButtonOn className="mr-2 text-2xl icon-active" />
-              ) : (
-                <IoRadioButtonOffSharp className="mr-2 text-2xl" />
-              )}
-              {text}
-            </Card>
-          ))}
-        </div>
-        <div className="flex items-end justify-end pt-4 pb-12">
-          <Button
-            className="btn-custom-next flex justify-between items-center w-full lg:w-[40%] xl:w-[36%]"
-            onClick={() => AlterProcess("step-fifteen")}
-            disabled={selectedOption === null}
+      <div className="flex flex-col w-full">
+        {weight.map((text, index) => (
+          <Card
+            key={index}
+            className={`w-full card-option-select flex justify-between items-center text-lg font-bold cursor-pointer z-20 ${
+              selectedOption === index ? " card-actived " : ""
+            }`}
+            onClick={() => handleSelect(index)}
           >
-            {button} <FaArrowRight />
-          </Button>
-        </div>
+            <p className="ml-4 font-light text-base py-2">{text}</p>
+
+            {selectedOption === index ? (
+              <IoRadioButtonOn className="mr-2 text-2xl icon-active" />
+            ) : (
+              <IoRadioButtonOffSharp className="mr-2 text-2xl" />
+            )}
+          </Card>
+        ))}
       </div>
     </div>
   );
 }
 
 StepFourteen.propTypes = {
-  language: PropTypes.oneOf(["in", "pt", "es", "it"]),
+  language: PropTypes.oneOf(["in", "pt", "es", "it", "fn"]),
   AlterProcess: PropTypes.func,
 };

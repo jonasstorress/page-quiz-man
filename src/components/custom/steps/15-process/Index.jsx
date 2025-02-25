@@ -1,72 +1,80 @@
 import "./Index.Style.css";
-import PropTypes from "prop-types";
-import {FaArrowRight} from "react-icons/fa6";
-import {Button} from "@/components/ui/button";
 
-import Animation from "./animation/Index";
+import PropTypes from "prop-types";
+
+import IMG1829 from "../../../../assets/images/steps/15-1.png";
+import IMG3039 from "../../../../assets/images/steps/15-2.png";
+import IMG4049 from "../../../../assets/images/steps/15-3.png";
+import IMG150plus from "../../../../assets/images/steps/15-4.png";
+
+import {Card} from "@/components/ui/card";
 
 const translations = {
   pt: {
-    title: "Não é necessário ir além dos limites!",
-    subtitle:
-      "Exercícios muito intensos podem aumentar seus níveis de cortisol e dificultar a perda de peso. A MadMuscles adapta seu plano para ajudá-lo a atingir suas metas sem exageros.",
-    button: "Entendi",
-    info: "*Com base em dados de 1,3 milhão de treinos",
-  },
-  in: {
-    title: "No need to push beyond your limits!",
-    subtitle:
-      "Overly intense workouts can increase your cortisol levels and make weight loss harder. MadMuscles adapts your plan to help you reach your goals without overdoing it.",
-    button: "Got it",
-    info: "*Based on data from 1.3 million workouts",
+    title: "Plano para melhorar o desempenho sexual de acordo com sua idade",
+    ages: ["No escritório", "Caminhadas", "Trabalho físico", "Em casa"],
   },
   es: {
-    title: "¡No es necesario ir más allá de tus límites!",
-    subtitle:
-      "Los entrenamientos demasiado intensos pueden aumentar tus niveles de cortisol y dificultar la pérdida de peso. MadMuscles adapta tu plan para ayudarte a alcanzar tus objetivos sin excesos.",
-    button: "Entendido",
-    info: "*Basado en datos de 1,3 millones de entrenamientos",
+    title: "Plan para mejorar el rendimiento sexual según tu edad",
+    ages: ["En la oficina", "Caminatas", "Trabajo físico", "En casa"],
   },
   it: {
-    title: "Non è necessario andare oltre i tuoi limiti!",
-    subtitle:
-      "Allenamenti troppo intensi possono aumentare i livelli di cortisolo e rendere più difficile la perdita di peso. MadMuscles adatta il tuo piano per aiutarti a raggiungere i tuoi obiettivi senza esagerare.",
-    button: "Ho capito",
-    info: "*Basato su dati di 1,3 milioni di allenamenti",
+    title: "Piano per migliorare le prestazioni sessuali in base alla tua età",
+    ages: ["In ufficio", "Passeggiate", "Lavoro fisico", "A casa"],
+  },
+  in: {
+    title: "Plan to improve sexual performance according to your age",
+    ages: ["In the office", "Walking", "Physical work", "At home"],
+  },
+  fn: {
+    title: "Plan pour améliorer les performances sexuelles selon votre âge",
+    ages: ["Au bureau", "Marches", "Travail physique", "À la maison"],
   },
 };
 
 export default function StepFifteen({language, AlterProcess}) {
   const lang = translations[language] ? language : "pt";
-  const {title, subtitle, button, info} = translations[lang];
+  const {title, ages} = translations[lang];
+
+  const ChangeProcess = () => {
+    AlterProcess("step-sixteen");
+  };
 
   return (
-    <div className="grid-custom-step px-4 md:px-0">
-      <div className="flex flex-col justify-center items-center pt-8 w-full">
-        <span className="text-white text-center lg:text-4xl font-bold pb-4 w-full">
+    <div className="container flex flex-col w-full pr-0 pl-0">
+      <div className="flex flex-col justify-center items-center content-center pt-6">
+        <span
+          className="text-center font-bold pb-6"
+          style={{fontSize: "22px", color: "#ffffffE0"}}
+        >
           {title}
         </span>
       </div>
-      <div className="flex flex-col w-full gap-4 mb-4">
-        <Animation />
-        <p className="text-white text-lg text-start leading-tight">
-          {subtitle}
-        </p>
-        <p className="text-center text-custom-muted pt-2">{info}</p>
-        <div className="flex items-end justify-end pt-4 pb-12">
-          <Button
-            className="btn-custom-next flex justify-between items-center w-full lg:w-[40%] xl:w-[36%]"
-            onClick={() => AlterProcess("step-sixteen")}
+      <div className="grid gap-4 grid-cols-2 ">
+        {[IMG1829, IMG3039, IMG4049, IMG150plus].map((img, index) => (
+          <Card
+            key={index}
+            className="card-custom-start w-full"
+            onClick={() => ChangeProcess()}
           >
-            {button} <FaArrowRight />
-          </Button>
-        </div>
+            <div className="card-custom-img">
+              <img
+                alt="..."
+                src={img}
+                className="w-full h-[167px] object-contain"
+              />
+            </div>
+            <div className="card-custom-footer">
+              <p className="font-light">{ages[index]}</p>
+            </div>
+          </Card>
+        ))}
       </div>
     </div>
   );
 }
 
 StepFifteen.propTypes = {
-  language: PropTypes.oneOf(["in", "pt", "es", "it"]),
+  language: PropTypes.oneOf(["in", "pt", "es", "it", "fn"]),
   AlterProcess: PropTypes.func,
 };

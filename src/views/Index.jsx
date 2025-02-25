@@ -39,33 +39,33 @@ const stepsComponents = {
   "step-sixteen": lazy(() =>
     import("@/components/custom/steps/15-process/Index")
   ),
-  "step-seventeen": lazy(() =>
-    import("@/components/custom/steps/16-process/Index")
-  ),
-  "step-eighteen": lazy(() =>
-    import("@/components/custom/steps/17-process/Index")
-  ),
-  "step-nineteen": lazy(() =>
-    import("@/components/custom/steps/18-process/Index")
-  ),
-  "step-twenty": lazy(() =>
-    import("@/components/custom/steps/19-process/Index")
-  ),
-  "step-twenty-one": lazy(() =>
-    import("@/components/custom/steps/20-process/Index")
-  ),
-  "step-twenty-two": lazy(() =>
-    import("@/components/custom/steps/21-process/Index")
-  ),
-  "step-twenty-three": lazy(() =>
-    import("@/components/custom/steps/22-process/Index")
-  ),
-  "step-twenty-four": lazy(() =>
-    import("@/components/custom/steps/23-process/Index")
-  ),
-  "step-twenty-five": lazy(() =>
-    import("@/components/custom/steps/24-process/Index")
-  ),
+  // "step-seventeen": lazy(() =>
+  //   import("@/components/custom/steps/16-process/Index")
+  // ),
+  // "step-eighteen": lazy(() =>
+  //   import("@/components/custom/steps/17-process/Index")
+  // ),
+  // "step-nineteen": lazy(() =>
+  //   import("@/components/custom/steps/18-process/Index")
+  // ),
+  // "step-twenty": lazy(() =>
+  //   import("@/components/custom/steps/19-process/Index")
+  // ),
+  // "step-twenty-one": lazy(() =>
+  //   import("@/components/custom/steps/20-process/Index")
+  // ),
+  // "step-twenty-two": lazy(() =>
+  //   import("@/components/custom/steps/21-process/Index")
+  // ),
+  // "step-twenty-three": lazy(() =>
+  //   import("@/components/custom/steps/22-process/Index")
+  // ),
+  // "step-twenty-four": lazy(() =>
+  //   import("@/components/custom/steps/23-process/Index")
+  // ),
+  // "step-twenty-five": lazy(() =>
+  //   import("@/components/custom/steps/24-process/Index")
+  // ),
 };
 
 export default function App() {
@@ -149,7 +149,7 @@ export default function App() {
                   >
                     <FaChevronLeft />
                   </div>
-                  <span className="text-white text-base font-semibold flex items-center space-x-1">
+                  <span className="text-white text-base font-semibold flex items-center space-x-1 select-none">
                     <div className="color-orange-custom ">
                       {validSteps.indexOf(stepProcess) + 2 < 10 && <>0</>}
                       {validSteps.indexOf(stepProcess) + 2}
@@ -174,9 +174,7 @@ export default function App() {
           {stepProcess === "result" ? (
             <Result lang={language} />
           ) : (
-            <Suspense
-              fallback={<div className="loading-spinner">Carregando...</div>}
-            >
+            <Suspense fallback={<div></div>}>
               {stepsComponents[stepProcess] &&
                 React.createElement(stepsComponents[stepProcess], {
                   language,

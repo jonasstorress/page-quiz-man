@@ -1,78 +1,98 @@
 import "./Index.Style.css";
 import PropTypes from "prop-types";
-import {FaArrowRight} from "react-icons/fa6";
-import {Button} from "@/components/ui/button";
-
-// IMG's
-import IMGninePt from "../../../../assets/images/steps/nine-pt.png";
-import IMGnineIt from "../../../../assets/images/steps/nine-it.png";
-import IMGnineEs from "../../../../assets/images/steps/nine-es.png";
-import IMGnineIn from "../../../../assets/images/steps/nine-in.png";
+import {useEffect, useState} from "react";
+import {Card} from "@/components/ui/card";
+import {IoRadioButtonOffSharp, IoRadioButtonOn} from "react-icons/io5";
 
 const translations = {
   pt: {
-    title: "Apenas 2 semanas para o primeiro resultado",
-    subtitle: "Prevemos que você verá melhorias até o final da segunda semana",
-    button: "Entendi",
-    info: "*Com base em dados de 1,3 milhão de treinos",
-    image: IMGninePt,
+    title: "Qual é seu estado civil?",
+    weight: ["Casado", "Em uma relação", "Solteiro", "Prefiro não responder"],
   },
   in: {
-    title: "Just 2 weeks for the first results",
-    subtitle:
-      "We predict you will see improvements by the end of the second week",
-    button: "Got it",
-    info: "*Based on data from 1.3 million workouts",
-    image: IMGnineIn,
+    title: "What is your marital status?",
+    weight: ["Married", "In a relationship", "Single", "Prefer not to answer"],
   },
   es: {
-    title: "Solo 2 semanas para los primeros resultados",
-    subtitle: "Predecimos que verás mejoras para el final de la segunda semana",
-    button: "Entendido",
-    info: "*Basado en datos de 1,3 millones de entrenamientos",
-    image: IMGnineEs,
+    title: "¿Cuál es tu estado civil?",
+    weight: ["Casado", "En una relación", "Soltero", "Prefiero no responder"],
   },
   it: {
-    title: "Solo 2 settimane per i primi risultati",
-    subtitle:
-      "Prevediamo che vedrai miglioramenti entro la fine della seconda settimana",
-    button: "Ho capito",
-    info: "*Basato su dati di 1,3 milioni di allenamenti",
-    image: IMGnineIt,
+    title: "Qual è il tuo stato civile?",
+    weight: [
+      "Sposato",
+      "In una relazione",
+      "Single",
+      "Preferisco non rispondere",
+    ],
+  },
+  fn: {
+    title: "Quel est votre état civil?",
+    weight: ["Marié", "En couple", "Célibataire", "Je préfère ne pas répondre"],
   },
 };
 
 export default function StepNine({language, AlterProcess}) {
   const lang = translations[language] ? language : "pt";
-  const {title, subtitle, button, info, image} = translations[lang];
+  const {title, weight} = translations[lang];
+
+  const ChangeProcess = () => {
+    AlterProcess("step-eleven");
+  };
+
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleSelect = (index) => {
+    setSelectedOption(index);
+  };
+
+  // useEffect para chamar ChangeProcess 1 segundo após a seleção de um item
+  useEffect(() => {
+    if (selectedOption !== null) {
+      const timer = setTimeout(() => {
+        ChangeProcess();
+      }, 1000); // 1000 milissegundos = 1 segundo
+
+      // Limpa o timer se o componente for desmontado ou se selectedOption mudar antes do tempo
+      return () => clearTimeout(timer);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedOption]); // Executa sempre que selectedOption mudar
 
   return (
     <div className="grid-custom-step px-4 md:px-0">
-      <div className="flex flex-col justify-center items-center pt-8 w-full">
-        <span className="text-white text-center lg:text-4xl font-bold pb-4 w-full">
+      <div className="flex flex-col justify-center items-center pt-4 w-full">
+        <span
+          className="text-center step-title-three font-bold pb-4 w-full"
+          style={{color: "#ffffffe0", fontSize: "22px"}}
+        >
           {title}
         </span>
-        <p className="text-white text-lg text-center leading-tight pb-8">
-          {subtitle}
-        </p>
       </div>
-      <div className="flex flex-col w-full gap-4 mb-4">
-        <img alt="..." src={image} className="mt-4" />
-        <p className="text-center text-custom-muted pt-8">{info}</p>
-        <div className="flex items-end justify-end pt-4 pb-12">
-          <Button
-            className="btn-custom-next flex justify-between items-center w-full lg:w-[40%] xl:w-[36%]"
-            onClick={() => AlterProcess("step-ten")}
+      <div className="flex flex-col w-full">
+        {weight.map((text, index) => (
+          <Card
+            key={index}
+            className={`w-full card-option-select flex justify-between items-center text-lg font-bold cursor-pointer z-20 ${
+              selectedOption === index ? " card-actived " : ""
+            }`}
+            onClick={() => handleSelect(index)}
           >
-            {button} <FaArrowRight />
-          </Button>
-        </div>
+            <p className="ml-4 font-light text-base py-2">{text}</p>
+
+            {selectedOption === index ? (
+              <IoRadioButtonOn className="mr-2 text-2xl icon-active" />
+            ) : (
+              <IoRadioButtonOffSharp className="mr-2 text-2xl" />
+            )}
+          </Card>
+        ))}
       </div>
     </div>
   );
 }
 
 StepNine.propTypes = {
-  language: PropTypes.oneOf(["in", "pt", "es", "it"]),
+  language: PropTypes.oneOf(["in", "pt", "es", "it", "fn"]),
   AlterProcess: PropTypes.func,
 };
