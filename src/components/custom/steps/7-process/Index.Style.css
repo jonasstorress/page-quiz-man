@@ -12,23 +12,26 @@
   background-color: #ff6025;
 }
 .card-option-select {
-  padding: 12px;
+  padding: 8px;
   margin: 0 0 16px;
   color: #ffffff;
-  border: 2px solid #1e1e1e;
-  background-color: #1e1e1e;
-  border-radius: 0px;
+  border: 2px solid #36343b;
+  background-color: #36343b;
+  border-radius: 16px;
 }
 .card-option-select:hover {
-  background-color: #2a2a2a;
-  border: 2px solid #2a2a2a;
   cursor: pointer;
 }
 
 .icon-active {
-  color: #ff6025;
+  color: #ffffff;
 }
 
 .card-actived {
-  border: 2px solid #ff6025 !important;
+  background-color: #eb3349;
+  border: 2px solid #eb3349 !important;
+}
+.card-actived:hover {
+  background-color: #eb3349;
+  border: 2px solid #eb3349 !important;
 }

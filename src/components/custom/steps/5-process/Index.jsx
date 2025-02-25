@@ -1,68 +1,118 @@
 import "./Index.Style.css";
 import PropTypes from "prop-types";
-import {FaArrowRight} from "react-icons/fa6";
-
-// IMG's
-import IMGfive from "../../../../assets/images/steps/five.png";
-import {Button} from "@/components/ui/button";
+import {useEffect, useState} from "react";
+import {Card} from "@/components/ui/card";
+import {IoRadioButtonOffSharp, IoRadioButtonOn} from "react-icons/io5";
 
 const translations = {
   pt: {
-    title: "Homens na faixa dos 20 anos",
-    subtitle:
-      "Podem precisar de uma abordagem ligeiramente diferente para os treinos com base em sua experiência com exercícios e nível de atividade.",
-    button: "Entendi",
+    title: "Quanto tempo dura em média sua relação sexual?",
+    weight: [
+      "Menos de 2 minutos",
+      "2-7 minutos",
+      "7-15 minutos",
+      "15 minutos ou mais",
+    ],
   },
   in: {
-    title: "Men in their 20s",
-    subtitle:
-      "May need a slightly different approach to workouts based on their exercise experience and activity level.",
-    button: "Got it",
+    title: "How long does your sexual intercourse last on average?",
+    weight: [
+      "Less than 2 minutes",
+      "2-7 minutes",
+      "7-15 minutes",
+      "15 minutes or more",
+    ],
   },
   es: {
-    title: "Hombres en sus 20 años",
-    subtitle:
-      "Pueden necesitar un enfoque ligeramente diferente para los entrenamientos según su experiencia con el ejercicio y su nivel de actividad.",
-    button: "Entendido",
+    title: "¿Cuánto dura en promedio tu relación sexual?",
+    weight: [
+      "Menos de 2 minutos",
+      "2-7 minutos",
+      "7-15 minutos",
+      "15 minutos o más",
+    ],
   },
   it: {
-    title: "Uomini sulla ventina",
-    subtitle:
-      "Potrebbero aver bisogno di un approccio leggermente diverso agli allenamenti in base alla loro esperienza con l'esercizio fisico e al livello di attività.",
-    button: "Ho capito",
+    title: "Quanto dura in media il tuo rapporto sessuale?",
+    weight: [
+      "Meno di 2 minuti",
+      "2-7 minuti",
+      "7-15 minuti",
+      "15 minuti o più",
+    ],
+  },
+  fn: {
+    title: "Combien de temps dure en moyenne votre rapport sexuel?",
+    weight: [
+      "Moins de 2 minutes",
+      "2-7 minutes",
+      "7-15 minutes",
+      "15 minutes ou plus",
+    ],
   },
 };
 
 export default function StepFive({language, AlterProcess}) {
   const lang = translations[language] ? language : "pt";
-  const {title, subtitle, button} = translations[lang];
+  const {title, weight} = translations[lang];
+
+  const ChangeProcess = () => {
+    AlterProcess("step-seven");
+  };
+
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleSelect = (index) => {
+    setSelectedOption(index);
+  };
+
+  // useEffect para chamar ChangeProcess 1 segundo após a seleção de um item
+  useEffect(() => {
+    if (selectedOption !== null) {
+      const timer = setTimeout(() => {
+        ChangeProcess();
+      }, 1000); // 1000 milissegundos = 1 segundo
+
+      // Limpa o timer se o componente for desmontado ou se selectedOption mudar antes do tempo
+      return () => clearTimeout(timer);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedOption]); // Executa sempre que selectedOption mudar
 
   return (
     <div className="grid-custom-step px-4 md:px-0">
-      <div className="flex flex-col justify-center items-center pt-8 w-full">
-        <span className="text-white text-center md:text-start lg:text-3xl font-bold pb-4 w-full">
+      <div className="flex flex-col justify-center items-center pt-4 w-full">
+        <span
+          className="text-center step-title-three font-bold pb-4 w-full"
+          style={{color: "#ffffffe0", fontSize: "22px"}}
+        >
           {title}
         </span>
-        <p className="text-white text-lg text-start leading-tight pb-8">
-          {subtitle}
-        </p>
       </div>
-      <div className="flex flex-col w-full gap-4 mb-4">
-        <img alt="..." src={IMGfive} />
-        <div className="flex items-end justify-end pt-4 pb-12">
-          <Button
-            className="btn-custom-next flex justify-between items-center w-full lg:w-[40%] xl:w-[36%]"
-            onClick={() => AlterProcess("step-six")}
+      <div className="flex flex-col w-full">
+        {weight.map((text, index) => (
+          <Card
+            key={index}
+            className={`w-full card-option-select flex justify-between items-center text-lg font-bold cursor-pointer z-20 ${
+              selectedOption === index ? " card-actived " : ""
+            }`}
+            onClick={() => handleSelect(index)}
           >
-            {button} <FaArrowRight />
-          </Button>
-        </div>
+            <p className="ml-4 font-light text-base py-2">{text}</p>
+
+            {selectedOption === index ? (
+              <IoRadioButtonOn className="mr-2 text-2xl icon-active" />
+            ) : (
+              <IoRadioButtonOffSharp className="mr-2 text-2xl" />
+            )}
+          </Card>
+        ))}
       </div>
     </div>
   );
 }
 
 StepFive.propTypes = {
-  language: PropTypes.oneOf(["in", "pt", "es", "it"]),
+  language: PropTypes.oneOf(["in", "pt", "es", "it", "fn"]),
   AlterProcess: PropTypes.func,
 };

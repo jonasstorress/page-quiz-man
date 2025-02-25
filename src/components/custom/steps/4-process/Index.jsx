@@ -1,117 +1,135 @@
 import "./Index.Style.css";
-
-import {useState} from "react";
 import PropTypes from "prop-types";
-
+import {useEffect, useState} from "react";
 import {Card} from "@/components/ui/card";
-import {Button} from "@/components/ui/button";
-
-import {FaArrowRight} from "react-icons/fa6";
-import {IoMdCheckboxOutline} from "react-icons/io";
-import {MdOutlineCheckBoxOutlineBlank} from "react-icons/md";
+import {IoRadioButtonOffSharp, IoRadioButtonOn} from "react-icons/io5";
 
 // Imagens
-import IMGfour1 from "../../../../assets/images/steps/four-1.png";
-import IMGfour2 from "../../../../assets/images/steps/four-2.png";
-import IMGfour3 from "../../../../assets/images/steps/four-3.png";
-import IMGfour4 from "../../../../assets/images/steps/four-4.png";
+import IMGFour1 from "../../../../assets/images/steps/four-1.svg";
+import IMGFour2 from "../../../../assets/images/steps/four-2.svg";
+import IMGFour3 from "../../../../assets/images/steps/four-3.svg";
+import IMGFour4 from "../../../../assets/images/steps/four-4.svg";
+import IMGFour5 from "../../../../assets/images/steps/four-5.svg";
 
 const translations = {
   pt: {
-    title: "Selecione as áreas problemáticas",
-    button: "Continuar",
-    values: [
-      "Peito Fraco",
-      "Braços Magros",
-      "Barriga de Cerveja",
-      "Pernas Magras",
+    title: "Como você classificaria seu desempenho sexual?",
+    weight: [
+      "Muito insatisfeito",
+      "Insatisfeito",
+      "Tudo bem",
+      "Satisfeito",
+      "Muito satisfeito",
     ],
   },
   in: {
-    title: "Select the problem areas",
-    button: "Continue",
-    values: ["Weak Chest", "Thin Arms", "Beer Belly", "Thin Legs"],
+    title: "How would you rate your sexual performance?",
+    weight: [
+      "Very dissatisfied",
+      "Dissatisfied",
+      "Okay",
+      "Satisfied",
+      "Very satisfied",
+    ],
   },
   es: {
-    title: "Selecciona las áreas problemáticas",
-    button: "Continuar",
-    values: [
-      "Pecho Débil",
-      "Brazos Delgados",
-      "Barriga Cervecera",
-      "Piernas Delgadas",
+    title: "¿Cómo calificarías tu desempeño sexual?",
+    weight: [
+      "Muy insatisfecho",
+      "Insatisfecho",
+      "Está bien",
+      "Satisfecho",
+      "Muy satisfecho",
     ],
   },
   it: {
-    title: "Seleziona le aree problematiche",
-    button: "Continua",
-    values: ["Petto Debole", "Braccia Magre", "Pancia da Birra", "Gambe Magre"],
+    title: "Come valuteresti la tua performance sessuale?",
+    weight: [
+      "Molto insoddisfatto",
+      "Insoddisfatto",
+      "Va bene",
+      "Soddisfatto",
+      "Molto soddisfatto",
+    ],
+  },
+  fn: {
+    title: "Comment évalueriez-vous votre performance sexuelle?",
+    weight: [
+      "Très insatisfait",
+      "Insatisfait",
+      "Ça va",
+      "Satisfait",
+      "Très satisfait",
+    ],
   },
 };
 
-const images = [IMGfour1, IMGfour2, IMGfour3, IMGfour4];
+const images = [IMGFour1, IMGFour2, IMGFour3, IMGFour4, IMGFour5];
 
 export default function StepFour({language, AlterProcess}) {
   const lang = translations[language] ? language : "pt";
-  const {title, button, values} = translations[lang];
-  const [selectedItems, setSelectedItems] = useState([]);
+  const {title, weight} = translations[lang];
 
-  const toggleSelection = (index) => {
-    setSelectedItems((prev) => {
-      if (prev.includes(index)) {
-        return prev.filter((item) => item !== index);
-      } else {
-        return [...prev, index];
-      }
-    });
+  const ChangeProcess = () => {
+    AlterProcess("step-six");
   };
 
-  const isAnySelected = selectedItems.length > 0;
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleSelect = (index) => {
+    setSelectedOption(index);
+  };
+
+  // useEffect para chamar ChangeProcess 1 segundo após a seleção de um item
+  useEffect(() => {
+    if (selectedOption !== null) {
+      const timer = setTimeout(() => {
+        ChangeProcess();
+      }, 1000); // 1000 milissegundos = 1 segundo
+
+      // Limpa o timer se o componente for desmontado ou se selectedOption mudar antes do tempo
+      return () => clearTimeout(timer);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedOption]); // Executa sempre que selectedOption mudar
 
   return (
     <div className="grid-custom-step px-4 md:px-0">
-      <div className="flex flex-col justify-center items-center pt-8 w-full">
-        <span className="text-white text-center md:text-start step-title-four font-bold pb-8 w-full">
+      <div className="flex flex-col justify-center items-center pt-4 w-full">
+        <span
+          className="text-center step-title-three font-bold pb-4 w-full"
+          style={{color: "#ffffffe0", fontSize: "22px"}}
+        >
           {title}
         </span>
       </div>
-      <div className="flex flex-col w-full gap-4 mb-4">
-        {values.map((w, index) => (
+      <div className="flex flex-col w-full">
+        {weight.map((text, index) => (
           <Card
             key={index}
-            className={`card-custom-four flex items-center relative overflow-hidden ${
-              selectedItems.includes(index) ? "card-custom-active" : ""
+            className={`w-full card-option-select flex justify-between items-center text-lg font-bold cursor-pointer z-20 ${
+              selectedOption === index ? " card-actived " : ""
             }`}
-            onClick={() => toggleSelection(index)}
+            onClick={() => handleSelect(index)}
           >
-            <div className="flex flex-col h-full ">
-              {selectedItems.includes(index) ? (
-                <IoMdCheckboxOutline className="w-6 h-6 custom-icon-on" />
-              ) : (
-                <MdOutlineCheckBoxOutlineBlank className="w-6 h-6 custom-icon-off" />
-              )}
+            <div className="flex items-center py-1 ml-2">
+              <img alt="..." src={images[index]} className="w-8 h-8" />
+              <p className="ml-4 font-light text-base">{text}</p>
             </div>
-            <p className="z-10 relative">{w}</p>
-            <div className="card-img-custom-four">
-              <img alt={w} src={images[index]} className="mr-5" />
-            </div>
+
+            {selectedOption === index ? (
+              <IoRadioButtonOn className="mr-2 text-2xl icon-active" />
+            ) : (
+              <IoRadioButtonOffSharp className="mr-2 text-2xl" />
+            )}
           </Card>
         ))}
-        <div className="flex items-end justify-end pt-4 pb-12">
-          <Button
-            className="btn-custom-next flex justify-between items-center w-full lg:w-[40%] xl:w-[36%]"
-            onClick={() => AlterProcess("step-five")}
-            disabled={!isAnySelected}
-          >
-            {button} <FaArrowRight />
-          </Button>
-        </div>
       </div>
     </div>
   );
 }
 
 StepFour.propTypes = {
-  language: PropTypes.oneOf(["in", "pt", "es", "it"]),
+  language: PropTypes.oneOf(["in", "pt", "es", "it", "fn"]),
   AlterProcess: PropTypes.func,
 };

@@ -47,6 +47,6 @@
 
 @media (max-width: 768px) {
   .card-custom-start {
-    width: 100%; /* Cards ocupam 100% em telas menores que md */
+    width: 100%;
   }
 }

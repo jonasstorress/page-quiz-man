@@ -1,104 +1,125 @@
 import "./Index.Style.css";
 import PropTypes from "prop-types";
-import {FaArrowRight} from "react-icons/fa6";
-import {IoRadioButtonOffSharp, IoRadioButtonOn} from "react-icons/io5";
-import {Button} from "@/components/ui/button";
+import {useEffect, useState} from "react";
 import {Card} from "@/components/ui/card";
-import {useState} from "react";
+import {IoRadioButtonOffSharp, IoRadioButtonOn} from "react-icons/io5";
 
-// IMG's
-import IMGsix from "../../../../assets/images/steps/six.png";
+// Imagens
+import IMGSix1 from "../../../../assets/images/steps/six-1.svg";
+import IMGSix2 from "../../../../assets/images/steps/six-2.svg";
+import IMGSix3 from "../../../../assets/images/steps/six-3.svg";
+import IMGSix4 from "../../../../assets/images/steps/six-4.svg";
 
 const translations = {
   pt: {
-    title: "Há quanto tempo você estava na melhor forma da sua vida?",
-    button: "Entendi",
-    option: [
-      "Há menos de um ano",
-      "1-3 anos atrás",
-      "Há mais de 3 anos",
+    title: "Com que frequência termina antes do que você gostaria?",
+    weight: [
       "Nunca",
+      "Às vezes",
+      "A maioria das vezes",
+      "Prefiro não responder",
     ],
   },
   in: {
-    title: "How long ago were you in the best shape of your life?",
-    button: "Got it",
-    option: [
-      "Less than a year ago",
-      "1-3 years ago",
-      "More than 3 years ago",
-      "Never",
-    ],
+    title: "How often do you finish earlier than you would like?",
+    weight: ["Never", "Sometimes", "Most of the time", "Prefer not to answer"],
   },
   es: {
-    title: "¿Hace cuánto tiempo estabas en la mejor forma de tu vida?",
-    button: "Entendido",
-    option: [
-      "Hace menos de un año",
-      "Hace 1-3 años",
-      "Hace más de 3 años",
+    title: "¿Con qué frecuencia terminas antes de lo que te gustaría?",
+    weight: [
       "Nunca",
+      "A veces",
+      "La mayoría de las veces",
+      "Prefiero no responder",
     ],
   },
   it: {
-    title: "Da quanto tempo eri nella migliore forma della tua vita?",
-    button: "Ho capito",
-    option: ["Meno di un anno fa", "1-3 anni fa", "Più di 3 anni fa", "Mai"],
+    title: "Con quale frequenza finisci prima di quanto desidereresti?",
+    weight: [
+      "Mai",
+      "A volte",
+      "La maggior parte delle volte",
+      "Preferisco non rispondere",
+    ],
+  },
+  fn: {
+    title:
+      "À quelle fréquence terminez-vous plus tôt que vous ne le souhaiteriez?",
+    weight: [
+      "Jamais",
+      "Parfois",
+      "La plupart du temps",
+      "Je préfère ne pas répondre",
+    ],
   },
 };
 
-export default function StepSix({language, AlterProcess}) {
+const images = [IMGSix1, IMGSix2, IMGSix3, IMGSix4];
+
+export default function StepFour({language, AlterProcess}) {
   const lang = translations[language] ? language : "pt";
-  const {title, option, button} = translations[lang];
+  const {title, weight} = translations[lang];
+
+  const ChangeProcess = () => {
+    AlterProcess("step-eight");
+  };
+
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleSelect = (index) => {
     setSelectedOption(index);
   };
 
+  // useEffect para chamar ChangeProcess 1 segundo após a seleção de um item
+  useEffect(() => {
+    if (selectedOption !== null) {
+      const timer = setTimeout(() => {
+        ChangeProcess();
+      }, 1000); // 1000 milissegundos = 1 segundo
+
+      // Limpa o timer se o componente for desmontado ou se selectedOption mudar antes do tempo
+      return () => clearTimeout(timer);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedOption]); // Executa sempre que selectedOption mudar
+
   return (
-    <div className="grid-custom-step px-4 md:px-0 relative">
-      <div className="flex flex-col justify-center items-center pt-8 w-full">
-        <span className="text-white text-center md:text-start lg:text-4xl font-bold pb-8 w-full">
+    <div className="grid-custom-step px-4 md:px-0">
+      <div className="flex flex-col justify-center items-center pt-4 w-full">
+        <span
+          className="text-center step-title-three font-bold pb-4 w-full"
+          style={{color: "#ffffffe0", fontSize: "22px"}}
+        >
           {title}
         </span>
       </div>
-      <div className="flex flex-col w-full gap-4 mb-4 relative">
-        <div className="w-full flex flex-col gap-2 relative">
-          {option.map((text, index) => (
-            <Card
-              key={index}
-              className={`w-[76%] card-option-select flex items-center text-lg font-bold cursor-pointer z-20 
-              ${selectedOption === index ? " card-actived " : ""}`}
-              onClick={() => handleSelect(index)}
-            >
-              {selectedOption === index ? (
-                <IoRadioButtonOn className="mr-2 text-2xl icon-active" />
-              ) : (
-                <IoRadioButtonOffSharp className="mr-2 text-2xl" />
-              )}
-              {text}
-            </Card>
-          ))}
-          <div className="absolute inset-0 flex items-center justify-end ">
-            <img alt="..." src={IMGsix} className="w-36" />
-          </div>
-        </div>
-        <div className="flex items-end justify-end pt-4 pb-12">
-          <Button
-            className="btn-custom-next flex justify-between items-center w-full lg:w-[40%] xl:w-[36%]"
-            onClick={() => AlterProcess("step-seven")}
-            disabled={selectedOption === null}
+      <div className="flex flex-col w-full">
+        {weight.map((text, index) => (
+          <Card
+            key={index}
+            className={`w-full card-option-select flex justify-between items-center text-lg font-bold cursor-pointer z-20 ${
+              selectedOption === index ? " card-actived " : ""
+            }`}
+            onClick={() => handleSelect(index)}
           >
-            {button} <FaArrowRight />
-          </Button>
-        </div>
+            <div className="flex items-center py-1 ml-2">
+              <img alt="..." src={images[index]} className="w-8 h-8" />
+              <p className="ml-4 font-light text-base">{text}</p>
+            </div>
+
+            {selectedOption === index ? (
+              <IoRadioButtonOn className="mr-2 text-2xl icon-active" />
+            ) : (
+              <IoRadioButtonOffSharp className="mr-2 text-2xl" />
+            )}
+          </Card>
+        ))}
       </div>
     </div>
   );
 }
 
-StepSix.propTypes = {
-  language: PropTypes.oneOf(["in", "pt", "es", "it"]),
+StepFour.propTypes = {
+  language: PropTypes.oneOf(["in", "pt", "es", "it", "fn"]),
   AlterProcess: PropTypes.func,
 };

@@ -42,7 +42,7 @@ export default function Start({language, AlterProcess}) {
   const {title, subtitle, ages} = translations[lang];
 
   const ChangeProcess = () => {
-    AlterProcess("step-one");
+    AlterProcess("step-two");
   };
 
   return (

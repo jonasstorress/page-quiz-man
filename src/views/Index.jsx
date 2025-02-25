@@ -12,56 +12,58 @@ import Result from "@/components/custom/result/Index.jsx";
 
 // Lazy load dos Steps
 const stepsComponents = {
-  "step-one": lazy(() => import("@/components/custom/steps/1-process/Index")),
-  "step-two": lazy(() => import("@/components/custom/steps/2-process/Index")),
-  "step-three": lazy(() => import("@/components/custom/steps/3-process/Index")),
-  "step-four": lazy(() => import("@/components/custom/steps/4-process/Index")),
-  "step-five": lazy(() => import("@/components/custom/steps/5-process/Index")),
-  "step-six": lazy(() => import("@/components/custom/steps/6-process/Index")),
-  "step-seven": lazy(() => import("@/components/custom/steps/7-process/Index")),
-  "step-eight": lazy(() => import("@/components/custom/steps/8-process/Index")),
-  "step-nine": lazy(() => import("@/components/custom/steps/9-process/Index")),
-  "step-ten": lazy(() => import("@/components/custom/steps/10-process/Index")),
+  "step-two": lazy(() => import("@/components/custom/steps/1-process/Index")),
+  "step-three": lazy(() => import("@/components/custom/steps/2-process/Index")),
+  "step-four": lazy(() => import("@/components/custom/steps/3-process/Index")),
+  "step-five": lazy(() => import("@/components/custom/steps/4-process/Index")),
+  "step-six": lazy(() => import("@/components/custom/steps/5-process/Index")),
+  "step-seven": lazy(() => import("@/components/custom/steps/6-process/Index")),
+  "step-eight": lazy(() => import("@/components/custom/steps/7-process/Index")),
+  "step-nine": lazy(() => import("@/components/custom/steps/8-process/Index")),
+  "step-ten": lazy(() => import("@/components/custom/steps/9-process/Index")),
   "step-eleven": lazy(() =>
-    import("@/components/custom/steps/11-process/Index")
+    import("@/components/custom/steps/10-process/Index")
   ),
   "step-twelve": lazy(() =>
-    import("@/components/custom/steps/12-process/Index")
+    import("@/components/custom/steps/11-process/Index")
   ),
   "step-thirteen": lazy(() =>
-    import("@/components/custom/steps/13-process/Index")
+    import("@/components/custom/steps/12-process/Index")
   ),
   "step-fourteen": lazy(() =>
-    import("@/components/custom/steps/14-process/Index")
+    import("@/components/custom/steps/13-process/Index")
   ),
   "step-fifteen": lazy(() =>
-    import("@/components/custom/steps/15-process/Index")
+    import("@/components/custom/steps/14-process/Index")
   ),
   "step-sixteen": lazy(() =>
-    import("@/components/custom/steps/16-process/Index")
+    import("@/components/custom/steps/15-process/Index")
   ),
   "step-seventeen": lazy(() =>
-    import("@/components/custom/steps/17-process/Index")
+    import("@/components/custom/steps/16-process/Index")
   ),
   "step-eighteen": lazy(() =>
-    import("@/components/custom/steps/18-process/Index")
+    import("@/components/custom/steps/17-process/Index")
   ),
   "step-nineteen": lazy(() =>
-    import("@/components/custom/steps/19-process/Index")
+    import("@/components/custom/steps/18-process/Index")
   ),
   "step-twenty": lazy(() =>
-    import("@/components/custom/steps/20-process/Index")
+    import("@/components/custom/steps/19-process/Index")
   ),
   "step-twenty-one": lazy(() =>
-    import("@/components/custom/steps/21-process/Index")
+    import("@/components/custom/steps/20-process/Index")
   ),
   "step-twenty-two": lazy(() =>
-    import("@/components/custom/steps/22-process/Index")
+    import("@/components/custom/steps/21-process/Index")
   ),
   "step-twenty-three": lazy(() =>
-    import("@/components/custom/steps/23-process/Index")
+    import("@/components/custom/steps/22-process/Index")
   ),
   "step-twenty-four": lazy(() =>
+    import("@/components/custom/steps/23-process/Index")
+  ),
+  "step-twenty-five": lazy(() =>
     import("@/components/custom/steps/24-process/Index")
   ),
 };
@@ -122,8 +124,8 @@ export default function App() {
               <div></div>
               <span className="text-white text-base px-7 flex items-center space-x-1">
                 <div className="color-orange-custom ">01</div>{" "}
-                <div className="text-xl font-bolder"> /</div>
-                <div> {validSteps.length}</div>
+                <div className="text-xl font-bolder">/</div>
+                <div>{validSteps.length}</div>
               </span>
             </div>
             <div className="flex justify-between items-center px-7">
@@ -147,9 +149,10 @@ export default function App() {
                   >
                     <FaChevronLeft />
                   </div>
-                  <span className="text-white text-base  flex items-center space-x-1">
+                  <span className="text-white text-base font-semibold flex items-center space-x-1">
                     <div className="color-orange-custom ">
-                      {validSteps.indexOf(stepProcess) + 1}
+                      {validSteps.indexOf(stepProcess) + 2 < 10 && <>0</>}
+                      {validSteps.indexOf(stepProcess) + 2}
                     </div>
                     <div className="text-xl font-bolder"> /</div>
                     <div> {validSteps.length}</div>
