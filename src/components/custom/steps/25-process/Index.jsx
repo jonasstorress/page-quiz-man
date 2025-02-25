@@ -6,58 +6,46 @@ import {IoRadioButtonOffSharp, IoRadioButtonOn} from "react-icons/io5";
 
 const translations = {
   pt: {
-    title: "Como você classificaria seu humor recentemente?",
-    weight: [
-      "Terrível, me sinto sobrecarregado",
-      "Regular, poderia ser melhor",
-      "Estou bem",
-      "Difícil dizer",
-    ],
+    title: "Defina sua meta de tempo",
+    alter:
+      "Escolha quanto tempo você dedicará a cada dia para atingir seu objetivo",
+    weight: ["5 min/dia", "10 min/dia", "15 min/dia", "20+ min/dia"],
   },
   in: {
-    title: "What is your level of physical activity?",
-    weight: [
-      "I exercise every day",
-      "I exercise occasionally",
-      "I have little physical activity",
-      "I don't exercise at all",
-    ],
+    title: "Set your time goal",
+    alter: "Choose how much time you will dedicate each day to reach your goal",
+    weight: ["5 min/day", "10 min/day", "15 min/day", "20+ min/day"],
   },
   es: {
-    title: "¿Cuál es tu nivel de actividad física?",
-    weight: [
-      "Hago ejercicio todos los días",
-      "Hago ejercicio de vez en cuando",
-      "Tengo poca actividad física",
-      "No hago ejercicio físico",
-    ],
+    title: "Define tu meta de tiempo",
+    alter: "Elige cuánto tiempo dedicarás cada día para alcanzar tu objetivo",
+    weight: ["5 min/día", "10 min/día", "15 min/día", "20+ min/día"],
   },
   it: {
-    title: "Qual è il tuo livello di attività fisica?",
+    title: "Imposta il tuo obiettivo di tempo",
+    alter:
+      "Scegli quanto tempo dedicherai ogni giorno per raggiungere il tuo obiettivo",
     weight: [
-      "Faccio esercizio tutti i giorni",
-      "Faccio esercizio ogni tanto",
-      "Ho poca attività fisica",
-      "Non faccio esercizio fisico",
+      "5 min/giorno",
+      "10 min/giorno",
+      "15 min/giorno",
+      "20+ min/giorno",
     ],
   },
   fn: {
-    title: "Quel est votre niveau d'activité physique?",
-    weight: [
-      "Je fais de l'exercice tous les jours",
-      "Je fais de l'exercice de temps en temps",
-      "J'ai peu d'activité physique",
-      "Je ne fais pas d'exercice physique",
-    ],
+    title: "Définissez votre objectif de temps",
+    alter:
+      "Choisissez combien de temps vous consacrerez chaque jour pour atteindre votre objectif",
+    weight: ["5 min/jour", "10 min/jour", "15 min/jour", "20+ min/jour"],
   },
 };
 
-export default function StepTwentyOne({language, AlterProcess}) {
+export default function StepTwentyFive({language, AlterProcess}) {
   const lang = translations[language] ? language : "pt";
-  const {title, weight} = translations[lang];
+  const {title, alter, weight} = translations[lang];
 
   const ChangeProcess = () => {
-    AlterProcess("step-twenty-three");
+    AlterProcess("result");
   };
 
   const [selectedOption, setSelectedOption] = useState(null);
@@ -83,11 +71,17 @@ export default function StepTwentyOne({language, AlterProcess}) {
     <div className="grid-custom-step px-4 md:px-0">
       <div className="flex flex-col justify-center items-center pt-4 w-full">
         <span
-          className="text-center step-title-three font-bold pb-4 w-full"
+          className="text-white text-center step-title-two font-bold pb-4 w-full"
           style={{color: "#ffffffe0", fontSize: "22px"}}
         >
           {title}
         </span>
+        <p
+          className="pb-6 text-base font-bolder text-center"
+          style={{color: "#ffffffa3"}}
+        >
+          {alter}
+        </p>
       </div>
       <div className="flex flex-col w-full">
         {weight.map((text, index) => (
@@ -112,7 +106,7 @@ export default function StepTwentyOne({language, AlterProcess}) {
   );
 }
 
-StepTwentyOne.propTypes = {
+StepTwentyFive.propTypes = {
   language: PropTypes.oneOf(["in", "pt", "es", "it", "fn"]),
   AlterProcess: PropTypes.func,
 };

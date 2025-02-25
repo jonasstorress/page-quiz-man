@@ -130,3 +130,7 @@
 .border-orange {
   border-color: #eb3349 !important;
 }
+
+.card-option-select {
+  user-select: none !important;
+}

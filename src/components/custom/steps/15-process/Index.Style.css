@@ -1,0 +1,37 @@
+.btn-custom-next {
+  border: 0px;
+  border-radius: 16px;
+  background-color: #eb3349;
+  color: #ffffff;
+  padding: 24px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.btn-custom-next:hover {
+  background-color: #e8233a;
+}
+.card-option-select {
+  padding: 8px;
+  margin: 0 0 16px;
+  color: #ffffff;
+  border: 2px solid #36343b;
+  background-color: #36343b;
+  border-radius: 16px;
+}
+.card-option-select:hover {
+  cursor: pointer;
+}
+
+.icon-active {
+  color: #ffffff;
+}
+
+.card-actived {
+  background-color: #eb3349;
+  border: 2px solid #eb3349 !important;
+}
+.card-actived:hover {
+  background-color: #eb3349;
+  border: 2px solid #eb3349 !important;
+}

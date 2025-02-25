@@ -39,33 +39,36 @@ const stepsComponents = {
   "step-sixteen": lazy(() =>
     import("@/components/custom/steps/15-process/Index")
   ),
-  // "step-seventeen": lazy(() =>
-  //   import("@/components/custom/steps/16-process/Index")
-  // ),
-  // "step-eighteen": lazy(() =>
-  //   import("@/components/custom/steps/17-process/Index")
-  // ),
-  // "step-nineteen": lazy(() =>
-  //   import("@/components/custom/steps/18-process/Index")
-  // ),
-  // "step-twenty": lazy(() =>
-  //   import("@/components/custom/steps/19-process/Index")
-  // ),
-  // "step-twenty-one": lazy(() =>
-  //   import("@/components/custom/steps/20-process/Index")
-  // ),
-  // "step-twenty-two": lazy(() =>
-  //   import("@/components/custom/steps/21-process/Index")
-  // ),
-  // "step-twenty-three": lazy(() =>
-  //   import("@/components/custom/steps/22-process/Index")
-  // ),
-  // "step-twenty-four": lazy(() =>
-  //   import("@/components/custom/steps/23-process/Index")
-  // ),
-  // "step-twenty-five": lazy(() =>
-  //   import("@/components/custom/steps/24-process/Index")
-  // ),
+  "step-seventeen": lazy(() =>
+    import("@/components/custom/steps/16-process/Index")
+  ),
+  "step-eighteen": lazy(() =>
+    import("@/components/custom/steps/17-process/Index")
+  ),
+  "step-nineteen": lazy(() =>
+    import("@/components/custom/steps/18-process/Index")
+  ),
+  "step-twenty": lazy(() =>
+    import("@/components/custom/steps/19-process/Index")
+  ),
+  "step-twenty-one": lazy(() =>
+    import("@/components/custom/steps/20-process/Index")
+  ),
+  "step-twenty-two": lazy(() =>
+    import("@/components/custom/steps/21-process/Index")
+  ),
+  "step-twenty-three": lazy(() =>
+    import("@/components/custom/steps/22-process/Index")
+  ),
+  "step-twenty-four": lazy(() =>
+    import("@/components/custom/steps/23-process/Index")
+  ),
+  "step-twenty-five": lazy(() =>
+    import("@/components/custom/steps/24-process/Index")
+  ),
+  "step-twenty-six": lazy(() =>
+    import("@/components/custom/steps/25-process/Index")
+  ),
 };
 
 export default function App() {

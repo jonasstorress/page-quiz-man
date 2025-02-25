@@ -1,101 +1,127 @@
 import "./Index.Style.css";
 import PropTypes from "prop-types";
-import {FaArrowRight} from "react-icons/fa6";
-import {Button} from "@/components/ui/button";
+import {useEffect, useState} from "react";
 import {Card} from "@/components/ui/card";
-import {useState} from "react";
+import {IoRadioButtonOffSharp, IoRadioButtonOn} from "react-icons/io5";
 
 const translations = {
   pt: {
-    title: "O quanto você se identifica com essa afirmação?",
-    subtitle:
-      "Não tenho certeza de como escolher exercícios que sejam adequados para mim.",
-    escala: ["De jeito nenhum", "Completamente"],
-    button: "Continuar",
+    title:
+      "Quanto tempo você gostaria de durar para satisfazer completamente seu parceiro?",
+    weight: [
+      "5-10 minutos",
+      "10-15 minutos",
+      "15-20 minutos",
+      "20-30 minutos",
+      "30+ minutos",
+    ],
   },
   in: {
-    title: "How much do you identify with this statement?",
-    subtitle: "I'm not sure how to choose exercises that are suitable for me.",
-    escala: ["Not at all", "Completely"],
-    button: "Continue",
+    title: "How long would you like to last to fully satisfy your partner?",
+    weight: [
+      "5-10 minutes",
+      "10-15 minutes",
+      "15-20 minutes",
+      "20-30 minutes",
+      "30+ minutes",
+    ],
   },
   es: {
-    title: "¿Cuánto te identificas con esta afirmación?",
-    subtitle:
-      "No estoy seguro de cómo elegir ejercicios que sean adecuados para mí.",
-    escala: ["Para nada", "Completamente"],
-    button: "Continuar",
+    title:
+      "¿Cuánto tiempo te gustaría durar para satisfacer completamente a tu pareja?",
+    weight: [
+      "5-10 minutos",
+      "10-15 minutos",
+      "15-20 minutos",
+      "20-30 minutos",
+      "30+ minutos",
+    ],
   },
   it: {
-    title: "Quanto ti identifichi con questa affermazione?",
-    subtitle: "Non sono sicuro di come scegliere esercizi adatti a me.",
-    escala: ["Per niente", "Completamente"],
-    button: "Continua",
+    title:
+      "Quanto tempo ti piacerebbe durare per soddisfare completamente il tuo partner?",
+    weight: [
+      "5-10 minuti",
+      "10-15 minuti",
+      "15-20 minuti",
+      "20-30 minuti",
+      "30+ minuti",
+    ],
+  },
+  fn: {
+    title:
+      "Combien de temps aimeriez-vous durer pour satisfaire pleinement votre partenaire ?",
+    weight: [
+      "5-10 minutes",
+      "10-15 minutes",
+      "15-20 minutes",
+      "20-30 minutes",
+      "30+ minutes",
+    ],
   },
 };
 
 export default function StepTwentyFour({language, AlterProcess}) {
   const lang = translations[language] ? language : "pt";
-  const {title, subtitle, button, escala} = translations[lang];
+  const {title, weight} = translations[lang];
 
-  // Estado para armazenar a opção selecionada
+  const ChangeProcess = () => {
+    AlterProcess("step-twenty-six");
+  };
+
   const [selectedOption, setSelectedOption] = useState(null);
 
-  // Função para lidar com a seleção de uma opção
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
+  const handleSelect = (index) => {
+    setSelectedOption(index);
   };
 
-  // Função para avançar para a próxima etapa
-  const handleNextStep = () => {
+  // useEffect para chamar ChangeProcess 1 segundo após a seleção de um item
+  useEffect(() => {
     if (selectedOption !== null) {
-      AlterProcess("result");
+      const timer = setTimeout(() => {
+        ChangeProcess();
+      }, 1000); // 1000 milissegundos = 1 segundo
+
+      // Limpa o timer se o componente for desmontado ou se selectedOption mudar antes do tempo
+      return () => clearTimeout(timer);
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedOption]); // Executa sempre que selectedOption mudar
 
   return (
     <div className="grid-custom-step px-4 md:px-0">
-      <div className="flex flex-col justify-center items-center pt-8 w-full">
-        <span className="text-white text-center lg:text-xl pb-4 w-full">
+      <div className="flex flex-col justify-center items-center pt-4 w-full">
+        <span
+          className="text-center step-title-three font-bold pb-4 w-full"
+          style={{color: "#ffffffe0", fontSize: "22px"}}
+        >
           {title}
         </span>
       </div>
-      <div className="flex flex-col w-full gap-4 mb-4">
-        <Card className="card-custom-frase bg-inherit rounded-none text-white font-bold">
-          {subtitle}
-        </Card>
-        <div className="flex flex-row items-center justify-between space-x-4">
-          {[1, 2, 3, 4, 5].map((option) => (
-            <span
-              key={option}
-              className={`btn-custom-med ${
-                selectedOption === option ? "btn-custom-med-active" : ""
-              }`}
-              onClick={() => handleOptionClick(option)}
-            >
-              {option}
-            </span>
-          ))}
-        </div>
-        <div className="flex items-center justify-between text-white">
-          <p>{escala[0]}</p>
-          <p>{escala[1]}</p>
-        </div>
-        <div className="flex items-end justify-end pt-4 pb-12">
-          <Button
-            className="btn-custom-next flex justify-between items-center w-full lg:w-[40%] xl:w-[36%]"
-            onClick={handleNextStep}
-            disabled={selectedOption === null} // Desabilita o botão se nenhuma opção for selecionada
+      <div className="flex flex-col w-full">
+        {weight.map((text, index) => (
+          <Card
+            key={index}
+            className={`w-full card-option-select flex justify-between items-center text-lg font-bold cursor-pointer z-20 ${
+              selectedOption === index ? " card-actived " : ""
+            }`}
+            onClick={() => handleSelect(index)}
           >
-            {button} <FaArrowRight />
-          </Button>
-        </div>
+            <p className="ml-4 font-light text-base py-2">{text}</p>
+
+            {selectedOption === index ? (
+              <IoRadioButtonOn className="mr-2 text-2xl icon-active" />
+            ) : (
+              <IoRadioButtonOffSharp className="mr-2 text-2xl" />
+            )}
+          </Card>
+        ))}
       </div>
     </div>
   );
 }
 
 StepTwentyFour.propTypes = {
-  language: PropTypes.oneOf(["in", "pt", "es", "it"]),
+  language: PropTypes.oneOf(["in", "pt", "es", "it", "fn"]),
   AlterProcess: PropTypes.func,
 };

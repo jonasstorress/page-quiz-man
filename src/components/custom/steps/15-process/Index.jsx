@@ -37,7 +37,7 @@ export default function StepFifteen({language, AlterProcess}) {
   const {title, ages} = translations[lang];
 
   const ChangeProcess = () => {
-    AlterProcess("step-sixteen");
+    AlterProcess("step-seventeen");
   };
 
   return (

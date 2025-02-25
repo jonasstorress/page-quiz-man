@@ -1,99 +1,123 @@
 import "./Index.Style.css";
 import PropTypes from "prop-types";
-import {FaArrowRight} from "react-icons/fa6";
-import {Button} from "@/components/ui/button";
+import {useEffect, useState} from "react";
 import {Card} from "@/components/ui/card";
-import {useState} from "react";
+import {IoRadioButtonOffSharp, IoRadioButtonOn} from "react-icons/io5";
+
+// Imagens
+import IMGSix1 from "../../../../assets/images/steps/six-2.svg";
+import IMGSix2 from "../../../../assets/images/steps/four-1.svg";
+import IMGSix3 from "../../../../assets/images/steps/three-4.svg";
+import IMGSix4 from "../../../../assets/images/steps/six-1.svg";
 
 const translations = {
   pt: {
-    title: "O quanto você se identifica com essa afirmação?",
-    subtitle: "Estou sem fôlego depois de subir um lance de escada.",
-    escala: ["De jeito nenhum", "Completamente"],
-    button: "Continuar",
+    title:
+      "Você tem pensamentos críticos sobre si mesmo antes, durante ou depois do sexo?",
+    alter:
+      "por exemplo, “Eu sei que não vou conseguir ter uma ereção esta noite”",
+    weight: ["Sim", "Não", "Às vezes", "Eu não tenho certeza"],
   },
   in: {
-    title: "How much do you identify with this statement?",
-    subtitle: "I am out of breath after climbing a flight of stairs.",
-    escala: ["Not at all", "Completely"],
-    button: "Continue",
+    title:
+      "Do you have critical thoughts about yourself before, during, or after sex?",
+    alter: "for example, 'I know I won't be able to get an erection tonight.'",
+    weight: ["Yes", "No", "Sometimes", "I'm not sure"],
   },
   es: {
-    title: "¿Cuánto te identificas con esta afirmación?",
-    subtitle: "Me quedo sin aliento después de subir un tramo de escaleras.",
-    escala: ["Para nada", "Completamente"],
-    button: "Continuar",
+    title:
+      "¿Tienes pensamientos críticos sobre ti mismo antes, durante o después del sexo?",
+    alter:
+      "por ejemplo, 'Sé que no voy a poder tener una erección esta noche.'",
+    weight: ["Sí", "No", "A veces", "No estoy seguro"],
   },
   it: {
-    title: "Quanto ti identifichi con questa affermazione?",
-    subtitle: "Sono senza fiato dopo aver salito una rampa di scale.",
-    escala: ["Per niente", "Completamente"],
-    button: "Continua",
+    title: "Hai pensieri critici su te stesso prima, durante o dopo il sesso?",
+    alter:
+      "per esempio, 'So che questa sera non riuscirò ad avere un'erezione.'",
+    weight: ["Sì", "No", "A volte", "Non sono sicuro"],
+  },
+  fn: {
+    title:
+      "Avez-vous des pensées critiques sur vous-même avant, pendant ou après le sexe ?",
+    alter:
+      "par exemple, 'Je sais que je ne pourrai pas avoir une érection ce soir.'",
+    weight: ["Oui", "Non", "Parfois", "Je ne suis pas sûr"],
   },
 };
 
+const images = [IMGSix1, IMGSix2, IMGSix3, IMGSix4];
+
 export default function StepTwentyTwo({language, AlterProcess}) {
   const lang = translations[language] ? language : "pt";
-  const {title, subtitle, button, escala} = translations[lang];
+  const {title, alter, weight} = translations[lang];
 
-  // Estado para armazenar a opção selecionada
+  const ChangeProcess = () => {
+    AlterProcess("step-twenty-four");
+  };
+
   const [selectedOption, setSelectedOption] = useState(null);
 
-  // Função para lidar com a seleção de uma opção
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
+  const handleSelect = (index) => {
+    setSelectedOption(index);
   };
 
-  // Função para avançar para a próxima etapa
-  const handleNextStep = () => {
+  // useEffect para chamar ChangeProcess 1 segundo após a seleção de um item
+  useEffect(() => {
     if (selectedOption !== null) {
-      AlterProcess("step-twenty-three");
+      const timer = setTimeout(() => {
+        ChangeProcess();
+      }, 1000); // 1000 milissegundos = 1 segundo
+
+      // Limpa o timer se o componente for desmontado ou se selectedOption mudar antes do tempo
+      return () => clearTimeout(timer);
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedOption]); // Executa sempre que selectedOption mudar
 
   return (
     <div className="grid-custom-step px-4 md:px-0">
-      <div className="flex flex-col justify-center items-center pt-8 w-full">
-        <span className="text-white text-center lg:text-xl pb-4 w-full">
+      <div className="flex flex-col justify-center items-center pt-4 w-full">
+        <span
+          className="text-white text-center step-title-two font-bold pb-4 w-full"
+          style={{color: "#ffffffe0", fontSize: "22px"}}
+        >
           {title}
         </span>
+        <p
+          className="pb-6 text-base font-bolder text-center"
+          style={{color: "#ffffffa3"}}
+        >
+          {alter}
+        </p>
       </div>
-      <div className="flex flex-col w-full gap-4 mb-4">
-        <Card className="card-custom-frase bg-inherit rounded-none text-white font-bold">
-          {subtitle}
-        </Card>
-        <div className="flex flex-row items-center justify-between space-x-4">
-          {[1, 2, 3, 4, 5].map((option) => (
-            <span
-              key={option}
-              className={`btn-custom-med ${
-                selectedOption === option ? "btn-custom-med-active" : ""
-              }`}
-              onClick={() => handleOptionClick(option)}
-            >
-              {option}
-            </span>
-          ))}
-        </div>
-        <div className="flex items-center justify-between text-white">
-          <p>{escala[0]}</p>
-          <p>{escala[1]}</p>
-        </div>
-        <div className="flex items-end justify-end pt-4 pb-12">
-          <Button
-            className="btn-custom-next flex justify-between items-center w-full lg:w-[40%] xl:w-[36%]"
-            onClick={handleNextStep}
-            disabled={selectedOption === null} // Desabilita o botão se nenhuma opção for selecionada
+      <div className="flex flex-col w-full">
+        {weight.map((text, index) => (
+          <Card
+            key={index}
+            className={`w-full card-option-select flex justify-between items-center text-lg font-bold cursor-pointer z-20 ${
+              selectedOption === index ? " card-actived " : ""
+            }`}
+            onClick={() => handleSelect(index)}
           >
-            {button} <FaArrowRight />
-          </Button>
-        </div>
+            <div className="flex items-center py-1 ml-2">
+              <img alt="..." src={images[index]} className="w-8 h-8" />
+              <p className="ml-4 font-light text-base">{text}</p>
+            </div>
+
+            {selectedOption === index ? (
+              <IoRadioButtonOn className="mr-2 text-2xl icon-active" />
+            ) : (
+              <IoRadioButtonOffSharp className="mr-2 text-2xl" />
+            )}
+          </Card>
+        ))}
       </div>
     </div>
   );
 }
 
 StepTwentyTwo.propTypes = {
-  language: PropTypes.oneOf(["in", "pt", "es", "it"]),
+  language: PropTypes.oneOf(["in", "pt", "es", "it", "fn"]),
   AlterProcess: PropTypes.func,
 };

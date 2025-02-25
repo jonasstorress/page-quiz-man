@@ -5,36 +5,49 @@ import {motion} from "framer-motion";
 const Result = ({lang}) => {
   const frasesPorIdioma = {
     pt: [
-      "Analisando os dados",
-      "Medindo o perfil corporal",
-      "Construindo o caminho de realização de objetivo",
-      "Criando programa de treinos",
-      "Planejando refeições",
-      "Seu plano de treino personalizado está pronto!",
+      "Coletando suas respostas",
+      "Analisando os seus resultados",
+      "Processando seu perfil",
+      "Priorizando os desafios",
+      "Estabelecendo suas metas",
+      "Criando seu plano pessoal",
+      "Gerado com sucesso! Você será direcionado..",
     ],
     en: [
-      "Analyzing data",
-      "Measuring body profile",
-      "Building the path to achieving your goal",
-      "Creating training program",
-      "Planning meals",
-      "Your personalized training plan is ready!",
+      "Analyzing your answers",
+      "Analyzing your results",
+      "Processing your profile",
+      "Prioritizing challenges",
+      "Setting your goals",
+      "Creating your personal plan",
+      "Successfully generated! You will be redirected..",
     ],
     es: [
-      "Analizando los datos",
-      "Midiendo el perfil corporal",
-      "Construyendo el camino para alcanzar tu objetivo",
-      "Creando programa de entrenamiento",
-      "Planificando comidas",
-      "Tu plan de entrenamiento personalizado está listo!",
+      "Recopilando tus respuestas",
+      "Analizando tus resultados",
+      "Procesando tu perfil",
+      "Priorizando los desafíos",
+      "Estableciendo tus metas",
+      "Creando tu plan personal",
+      "¡Generado con éxito! Serás redirigido..",
     ],
     it: [
-      "Analizzando i dati",
-      "Misurando il profilo corporeo",
-      "Costruendo il percorso per raggiungere il tuo obiettivo",
-      "Creando il programma di allenamento",
-      "Pianificando i pasti",
-      "Il tuo piano di allenamento personalizzato è pronto!",
+      "Raccogliendo le tue risposte",
+      "Analizzando i tuoi risultati",
+      "Elaborando il tuo profilo",
+      "Prioritizzando le sfide",
+      "Stabilendo i tuoi obiettivi",
+      "Creando il tuo piano personale",
+      "Generato con successo! Sarai reindirizzato..",
+    ],
+    fn: [
+      "Collecting your answers",
+      "Analyzing your results",
+      "Processing your profile",
+      "Prioritizing the challenges",
+      "Setting your goals",
+      "Creating your personal plan",
+      "Successfully generated! You will be redirected..",
     ],
   };
 
@@ -87,14 +100,14 @@ const Result = ({lang}) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-custom-color-black text-inherit">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-inherit text-inherit">
       <div className="relative w-40 h-40">
         <svg className="w-full h-full transform -rotate-90">
           {/* Círculo de fundo que fica laranja ao completar */}
           <circle
             strokeWidth="6"
             stroke="currentColor"
-            fill={isComplete ? "#ff6025" : "transparent"}
+            fill={isComplete ? "#eb3349" : "transparent"}
             r="58"
             cx="50%"
             cy="50%"
@@ -107,7 +120,7 @@ const Result = ({lang}) => {
             r="58"
             cx="50%"
             cy="50%"
-            stroke="#ff6025"
+            stroke="#eb3349"
             strokeDasharray="364.24"
             strokeDashoffset="364.24"
             animate={{

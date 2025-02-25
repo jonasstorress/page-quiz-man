@@ -1,103 +1,126 @@
 import "./Index.Style.css";
 import PropTypes from "prop-types";
-import {FaArrowRight} from "react-icons/fa6";
-import {Button} from "@/components/ui/button";
+import {useEffect, useState} from "react";
 import {Card} from "@/components/ui/card";
-import {useState} from "react";
+import {IoRadioButtonOffSharp, IoRadioButtonOn} from "react-icons/io5";
+
+// Imagens
+import IMGSix1 from "../../../../assets/images/steps/six-2.svg";
+import IMGSix2 from "../../../../assets/images/steps/six-1.svg";
+import IMGSix3 from "../../../../assets/images/steps/four-1.svg";
+import IMGSix4 from "../../../../assets/images/steps/three-4.svg";
 
 const translations = {
   pt: {
-    title: "O quanto você se identifica com essa afirmação?",
-    subtitle:
-      "Depois de uma ou duas semanas comendo de forma mais saudável ou praticando exercícios, costumo voltar à minha antiga rotina.",
-    escala: ["De jeito nenhum", "Completamente"],
-    button: "Continuar",
+    title:
+      "Você sente que seu parceiro fica decepcionado depois da intimidade?",
+    weight: [
+      "Sim, acho que sim.",
+      "Às vezes",
+      "Eu não tenho certeza",
+      "Definitivamente não",
+    ],
   },
   in: {
-    title: "How much do you identify with this statement?",
-    subtitle:
-      "After one or two weeks of eating healthier or exercising, I usually go back to my old routine.",
-    escala: ["Not at all", "Completely"],
-    button: "Continue",
+    title: "Do you feel like your partner gets disappointed after intimacy?",
+    weight: ["Yes, I think so.", "Sometimes", "I'm not sure", "Definitely not"],
   },
   es: {
-    title: "¿Cuánto te identificas con esta afirmación?",
-    subtitle:
-      "Después de una o dos semanas comiendo más saludable o haciendo ejercicio, suelo volver a mi antigua rutina.",
-    escala: ["Para nada", "Completamente"],
-    button: "Continuar",
+    title: "¿Sientes que tu pareja se decepciona después de la intimidad?",
+    weight: [
+      "Sí, creo que sí.",
+      "A veces",
+      "No estoy seguro",
+      "Definitivamente no",
+    ],
   },
   it: {
-    title: "Quanto ti identifichi con questa affermazione?",
-    subtitle:
-      "Dopo una o due settimane di alimentazione più sana o di esercizio fisico, di solito torno alla mia vecchia routine.",
-    escala: ["Per niente", "Completamente"],
-    button: "Continua",
+    title: "Senti che il tuo partner si sente deluso dopo l'intimità?",
+    weight: [
+      "Sì, penso di sì.",
+      "A volte",
+      "Non sono sicuro",
+      "Definitivamente no",
+    ],
+  },
+  fn: {
+    title:
+      "Avez-vous l'impression que votre partenaire est déçu après l'intimité ?",
+    weight: [
+      "Oui, je pense que oui.",
+      "Parfois",
+      "Je ne suis pas sûr",
+      "Certainement pas",
+    ],
   },
 };
 
+const images = [IMGSix1, IMGSix2, IMGSix3, IMGSix4];
+
 export default function StepTwentyThree({language, AlterProcess}) {
   const lang = translations[language] ? language : "pt";
-  const {title, subtitle, button, escala} = translations[lang];
+  const {title, weight} = translations[lang];
 
-  // Estado para armazenar a opção selecionada
+  const ChangeProcess = () => {
+    AlterProcess("step-twenty-five");
+  };
+
   const [selectedOption, setSelectedOption] = useState(null);
 
-  // Função para lidar com a seleção de uma opção
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
+  const handleSelect = (index) => {
+    setSelectedOption(index);
   };
 
-  // Função para avançar para a próxima etapa
-  const handleNextStep = () => {
+  // useEffect para chamar ChangeProcess 1 segundo após a seleção de um item
+  useEffect(() => {
     if (selectedOption !== null) {
-      AlterProcess("step-twenty-four");
+      const timer = setTimeout(() => {
+        ChangeProcess();
+      }, 1000); // 1000 milissegundos = 1 segundo
+
+      // Limpa o timer se o componente for desmontado ou se selectedOption mudar antes do tempo
+      return () => clearTimeout(timer);
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedOption]); // Executa sempre que selectedOption mudar
 
   return (
     <div className="grid-custom-step px-4 md:px-0">
-      <div className="flex flex-col justify-center items-center pt-8 w-full">
-        <span className="text-white text-center lg:text-xl pb-4 w-full">
+      <div className="flex flex-col justify-center items-center pt-4 w-full">
+        <span
+          className="text-white text-center step-title-two font-bold pb-4 w-full"
+          style={{color: "#ffffffe0", fontSize: "22px"}}
+        >
           {title}
         </span>
       </div>
-      <div className="flex flex-col w-full gap-4 mb-4">
-        <Card className="card-custom-frase bg-inherit rounded-none text-white font-bold">
-          {subtitle}
-        </Card>
-        <div className="flex flex-row items-center justify-between space-x-4">
-          {[1, 2, 3, 4, 5].map((option) => (
-            <span
-              key={option}
-              className={`btn-custom-med ${
-                selectedOption === option ? "btn-custom-med-active" : ""
-              }`}
-              onClick={() => handleOptionClick(option)}
-            >
-              {option}
-            </span>
-          ))}
-        </div>
-        <div className="flex items-center justify-between text-white">
-          <p>{escala[0]}</p>
-          <p>{escala[1]}</p>
-        </div>
-        <div className="flex items-end justify-end pt-4 pb-12">
-          <Button
-            className="btn-custom-next flex justify-between items-center w-full lg:w-[40%] xl:w-[36%]"
-            onClick={handleNextStep}
-            disabled={selectedOption === null} // Desabilita o botão se nenhuma opção for selecionada
+      <div className="flex flex-col w-full">
+        {weight.map((text, index) => (
+          <Card
+            key={index}
+            className={`w-full card-option-select flex justify-between items-center text-lg font-bold cursor-pointer z-20 ${
+              selectedOption === index ? " card-actived " : ""
+            }`}
+            onClick={() => handleSelect(index)}
           >
-            {button} <FaArrowRight />
-          </Button>
-        </div>
+            <div className="flex items-center py-1 ml-2">
+              <img alt="..." src={images[index]} className="w-8 h-8" />
+              <p className="ml-4 font-light text-base">{text}</p>
+            </div>
+
+            {selectedOption === index ? (
+              <IoRadioButtonOn className="mr-2 text-2xl icon-active" />
+            ) : (
+              <IoRadioButtonOffSharp className="mr-2 text-2xl" />
+            )}
+          </Card>
+        ))}
       </div>
     </div>
   );
 }
 
 StepTwentyThree.propTypes = {
-  language: PropTypes.oneOf(["in", "pt", "es", "it"]),
+  language: PropTypes.oneOf(["in", "pt", "es", "it", "fn"]),
   AlterProcess: PropTypes.func,
 };
