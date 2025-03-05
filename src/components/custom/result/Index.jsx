@@ -52,10 +52,11 @@ const Result = ({lang}) => {
   };
 
   const destinosPorIdioma = {
-    pt: "https://pay.cakto.com.br/8sas7uf",
-    en: "https://pay.cakto.com.br/8sas7uf",
-    es: "https://pay.cakto.com.br/8sas7uf",
-    it: "https://pay.cakto.com.br/8sas7uf",
+    pt: "https://pay.hotmart.com/S98460348W",
+    en: "https://pay.hotmart.com/S98460348W",
+    es: "https://pay.hotmart.com/S98460348W",
+    it: "https://pay.hotmart.com/S98460348W",
+    fn: "https://pay.hotmart.com/S98460348W",
   };
 
   const frases = frasesPorIdioma[lang] || frasesPorIdioma["pt"];
@@ -97,7 +98,7 @@ const Result = ({lang}) => {
       clearInterval(progressInterval);
       clearInterval(fraseInterval);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
